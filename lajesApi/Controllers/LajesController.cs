@@ -18,7 +18,7 @@ public static class LajesController {
             return Results.Ok(laje);
         });
 
-
+        //POST
         lajesEndpoint.MapPost("", async (AddLajesRequest request, [FromServices] LajeRepository lajeRepository) => {
             var novaLaje = new Laje(request.Name, request.Price);
 
@@ -29,6 +29,10 @@ public static class LajesController {
             await lajeRepository.AddLajeAsync(novaLaje);
             return Results.Ok();
         });
+
+        //PUT
+
+        //DELETE
     }
 
 
