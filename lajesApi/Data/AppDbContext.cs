@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext {
-    DbSet<Laje> Lajes { get; set; }
+    public DbSet<Laje> Lajes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
