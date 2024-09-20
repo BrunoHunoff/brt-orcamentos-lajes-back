@@ -28,12 +28,14 @@ public static class LajesController {
 
         //PUT
         lajesEndpoint.MapPut("{id:guid}", async ([FromRoute] Guid id, [FromBody] Laje novaLaje, [FromServices] LajeRepository lajeRepository) => {
-
-        var laje = await lajeRepository.UpdateLaje(id, novaLaje);
-
-        if (laje is null) return Results.NotFound("Laje with the specified ID not found.");
-
+        try{
+            var laje = await lajeRepository.UpdateLaje(id, novaLaje);
         return Results.Ok(laje);
+        } catch (KeyNotFoundException e) {
+            return Results.NotFound(e.Message);
+        }
+
+        
 });
 
 

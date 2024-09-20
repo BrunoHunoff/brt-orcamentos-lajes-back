@@ -37,6 +37,8 @@ public class LajeRepository {
 
         var laje = await GetLajeById(id);
 
+        if (laje is null) throw new KeyNotFoundException("Id not found");
+
         laje.UpdateLaje(novaLaje.Name, novaLaje.Price);
 
         await dbContext.SaveChangesAsync();
