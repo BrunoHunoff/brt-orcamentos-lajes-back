@@ -11,6 +11,7 @@ public class LajeRepository {
         return await dbContext.Lajes.AnyAsync(Laje => Laje.Name == name);
     }
 
+    
     //CREATE
     public async Task AddLajeAsync(Laje laje) {
         await dbContext.Lajes.AddAsync(laje);
@@ -18,14 +19,16 @@ public class LajeRepository {
     }
 
     //READ ALL
-    public async Task<List<Laje>> ReadAllLajes() => await dbContext.Lajes.ToListAsync();
+    public async Task<List<Laje>> GetAllLajes() => 
+        await dbContext.Lajes.ToListAsync();
 
     //READ ID
-    public async Task<Laje> GetLajeById(Guid id) {
-        await dbContext.Lajes.FindAsync(Laje laje);
-    }
+    public async Task<Laje> GetLajeById(Guid id) => 
+        await dbContext.Lajes.SingleOrDefaultAsync(laje => laje.Id == id);
+
     
     //UPDATE
+
 
     //DELETE
 }
