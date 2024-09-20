@@ -10,4 +10,11 @@ public class Laje {
         Name = name;
         Price = price;
     }
+
+    public void UpdateLaje(String name, double price) {
+        Name = name;
+        Price = price;
+    }
+
+    
 }
