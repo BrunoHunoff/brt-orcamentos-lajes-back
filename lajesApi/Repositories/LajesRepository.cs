@@ -30,7 +30,6 @@ public class LajeRepository {
     public async Task<Laje> GetLajeById(Guid id) {
         return await dbContext.Lajes.SingleOrDefaultAsync(laje => laje.Id == id);
     }
-
     
     //UPDATE
     public async Task<Laje?> UpdateLaje(Guid id, Laje novaLaje){
@@ -39,14 +38,21 @@ public class LajeRepository {
 
         if (laje is null) throw new KeyNotFoundException("Id not found");
 
-        laje.UpdateLaje(novaLaje.Name, novaLaje.Price);
+        laje.UpdateLaje(novaLaje.Name, novaLaje.Price, novaLaje.Weight);
 
         await dbContext.SaveChangesAsync();
 
         return laje;
     }
-    
-
 
     //DELETE
+    public async Task DeleteLaje(Guid id) {
+        var laje = await GetLajeById(id);
+
+        if (laje is null) throw new KeyNotFoundException("Id not found");
+
+        dbContext.Lajes.Remove(laje);
+
+        await dbContext.SaveChangesAsync();
+    }
 }

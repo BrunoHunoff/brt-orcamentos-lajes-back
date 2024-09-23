@@ -24,7 +24,7 @@ public static class LajesController
         //POST
         lajesEndpoint.MapPost("", async (AddLajesRequest request, [FromServices] LajeRepository lajeRepository) =>
         {
-            var novaLaje = new Laje(request.Name, request.Price);
+            var novaLaje = new Laje(request.Name, request.Price, request.Weight);
 
             await lajeRepository.AddLajeAsync(novaLaje);
             return Results.Ok();
@@ -41,13 +41,25 @@ public static class LajesController
             catch (KeyNotFoundException e)
             {
                 return Results.NotFound(e.Message);
+            } catch (Exception e) {
+                return Results.Problem("An unexpected error occurred: " + e.Message);
             }
-
 
         });
 
 
         //DELETE
+        lajesEndpoint.MapDelete("{id:Guid}", async ([FromRoute] Guid id, [FromServices] LajeRepository lajeRepository) => {
+            try 
+            {
+                await lajeRepository.DeleteLaje(id);
+                return Results.NoContent();
+            } catch (KeyNotFoundException e) {
+                return Results.NotFound(e.Message);
+            } catch (Exception e) {
+                return Results.Problem("An unexpected error occurred: " + e.Message);
+            }
+        });
     }
 
 
