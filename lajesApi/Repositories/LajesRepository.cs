@@ -1,57 +1,57 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
-public class LajeRepository {
+public class slabRepository {
     private readonly AppDbContext dbContext;
 
-    public LajeRepository(AppDbContext AppdbContext) {
+    public slabRepository(AppDbContext AppdbContext) {
         dbContext = AppdbContext;
     }
 
-    private async Task<bool> LajeExists(string name) {
-        return await dbContext.Lajes.AnyAsync(Laje => Laje.Name == name);
+    private async Task<bool> slabExists(string name) {
+        return await dbContext.slabs.AnyAsync(slab => slab.Name == name);
     }
 
     
     //CREATE
-    public async Task AddLajeAsync(Laje laje) {
+    public async Task AddslabAsync(Slab slab) {
 
-        if (await LajeExists(laje.Name)) throw new Exception("name already in use");
+        if (await slabExists(slab.Name)) throw new Exception("name already in use");
 
-        await dbContext.Lajes.AddAsync(laje);
+        await dbContext.slabs.AddAsync(slab);
         await dbContext.SaveChangesAsync();
     }
 
     //READ ALL
-    public async Task<List<Laje>> GetAllLajes() => 
-        await dbContext.Lajes.ToListAsync();
+    public async Task<List<Slab>> GetAllslabs() => 
+        await dbContext.slabs.ToListAsync();
 
     //READ ID
-    public async Task<Laje> GetLajeById(Guid id) {
-        return await dbContext.Lajes.SingleOrDefaultAsync(laje => laje.Id == id);
+    public async Task<Slab> GetslabById(Guid id) {
+        return await dbContext.slabs.SingleOrDefaultAsync(slab => slab.Id == id);
     }
     
     //UPDATE
-    public async Task<Laje?> UpdateLaje(Guid id, Laje novaLaje){
+    public async Task<Slab?> Updateslab(Guid id, Slab novaslab){
 
-        var laje = await GetLajeById(id);
+        var slab = await GetslabById(id);
 
-        if (laje is null) throw new KeyNotFoundException("Id not found");
+        if (slab is null) throw new KeyNotFoundException("Id not found");
 
-        laje.UpdateLaje(novaLaje.Name, novaLaje.Price, novaLaje.Weight);
+        slab.UpdateSlab(novaslab.Name, novaslab.Price, novaslab.Weight);
 
         await dbContext.SaveChangesAsync();
 
-        return laje;
+        return slab;
     }
 
     //DELETE
-    public async Task DeleteLaje(Guid id) {
-        var laje = await GetLajeById(id);
+    public async Task Deleteslab(Guid id) {
+        var slab = await GetslabById(id);
 
-        if (laje is null) throw new KeyNotFoundException("Id not found");
+        if (slab is null) throw new KeyNotFoundException("Id not found");
 
-        dbContext.Lajes.Remove(laje);
+        dbContext.slabs.Remove(slab);
 
         await dbContext.SaveChangesAsync();
     }
