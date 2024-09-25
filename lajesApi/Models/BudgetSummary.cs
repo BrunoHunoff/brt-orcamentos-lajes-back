@@ -15,4 +15,12 @@ public class BudgetSummary {
         Extra = extra;
         FreightWeight = freightWeight;
     }
+
+    public void UpdateBudgetSummary(double contribution, double administration, double taxes, double extra, double freightWeight) {
+        Contribution = contribution;
+        Administration = administration;
+        Taxes = taxes;
+        Extra = extra;
+        FreightWeight = freightWeight;
+    }
 }

@@ -21,4 +21,15 @@ public class Budget {
         Freight = freight;
         FreightId = freight.Id;
     }
+
+    public void UpdateBudget(int costumerId, double footage, double value, string city, string state, Freight freight, List<BudgetSlab> budgetSlabs) {
+        CostumerId = costumerId;
+        Footage = footage;
+        Value = value;
+        City = city;
+        State = state;
+        Freight = freight;
+        FreightId = freight.Id;
+        Slabs = budgetSlabs;
+    }
 }

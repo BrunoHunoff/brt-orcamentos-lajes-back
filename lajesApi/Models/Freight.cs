@@ -9,4 +9,10 @@ public class Freight {
         State = state;
         Price = price;
     }
+
+    public void Updatefreight(string city, string state, double price) {
+        City = city;
+        State = state;
+        Price = price;
+    }
 }

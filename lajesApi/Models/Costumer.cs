@@ -11,11 +11,10 @@ public class Costumer {
     public string Email { get; private set; }
     public string PhoneNumber { get; private set; }
 
-    public Costumer(int id, string name, bool pJ, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber)
+    public Costumer(string name, bool pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber)
         {
-            Id = id;
             Name = name;
-            PJ = pJ;
+            PJ = pj;
             CnpjCpf = cnpjCpf;
             Cep = cep;
             City = city;
@@ -26,4 +25,16 @@ public class Costumer {
             PhoneNumber = phoneNumber;
         }
 
+    public void Updatecostumer(string name, bool pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber) {
+        Name = name;
+            PJ = pj;
+            CnpjCpf = cnpjCpf;
+            Cep = cep;
+            City = city;
+            State = state;
+            Address = address;
+            AddressNumber = addressNumber;
+            Email = email;
+            PhoneNumber = phoneNumber;
+    }
 }
