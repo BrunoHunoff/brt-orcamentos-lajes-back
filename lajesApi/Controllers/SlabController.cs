@@ -8,11 +8,11 @@ public static class SlabController
         var slabEndpoints = app.MapGroup("slabs");
 
         //GET ALL
-        slabEndpoints.MapGet("", async ([FromServices] slabRepository slabRepository) =>
+        slabEndpoints.MapGet("", async ([FromServices] SlabsRepository slabRepository) =>
             await slabRepository.GetAllslabs());
 
         //GET ID
-        slabEndpoints.MapGet("{id:guid}", async ([FromRoute] Guid id, slabRepository slabRepository) =>
+        slabEndpoints.MapGet("{id:guid}", async ([FromRoute] int id, SlabsRepository slabRepository) =>
         {
             var slab = await slabRepository.GetslabById(id);
 
@@ -22,7 +22,7 @@ public static class SlabController
         });
 
         //POST
-        slabEndpoints.MapPost("", async (AddslabsRequest request, [FromServices] slabRepository slabRepository) =>
+        slabEndpoints.MapPost("", async (AddSlabsRequest request, [FromServices] SlabsRepository slabRepository) =>
         {
             var novaslab = new Slab(request.Name, request.Price, request.Weight);
 
@@ -31,7 +31,7 @@ public static class SlabController
         });
 
         //PUT
-        slabEndpoints.MapPut("{id:guid}", async ([FromRoute] Guid id, [FromBody] Slab novaslab, [FromServices] slabRepository slabRepository) =>
+        slabEndpoints.MapPut("{id:guid}", async ([FromRoute] int id, [FromBody] Slab novaslab, [FromServices] SlabsRepository slabRepository) =>
         {
             try
             {
@@ -49,7 +49,7 @@ public static class SlabController
 
 
         //DELETE
-        slabEndpoints.MapDelete("{id:Guid}", async ([FromRoute] Guid id, [FromServices] slabRepository slabRepository) => {
+        slabEndpoints.MapDelete("{id:Guid}", async ([FromRoute] int id, [FromServices] SlabsRepository slabRepository) => {
             try 
             {
                 await slabRepository.Deleteslab(id);

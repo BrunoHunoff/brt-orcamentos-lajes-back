@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 
-public class slabRepository {
+public class SlabsRepository {
     private readonly AppDbContext dbContext;
 
-    public slabRepository(AppDbContext AppdbContext) {
+    public SlabsRepository(AppDbContext AppdbContext) {
         dbContext = AppdbContext;
     }
 
@@ -26,12 +26,12 @@ public class slabRepository {
         await dbContext.slabs.ToListAsync();
 
     //READ ID
-    public async Task<Slab> GetslabById(Guid id) {
+    public async Task<Slab> GetslabById(int id) {
         return await dbContext.slabs.SingleOrDefaultAsync(slab => slab.Id == id);
     }
     
     //UPDATE
-    public async Task<Slab?> Updateslab(Guid id, Slab novaslab){
+    public async Task<Slab?> Updateslab(int id, Slab novaslab){
 
         var slab = await GetslabById(id);
 
@@ -45,7 +45,7 @@ public class slabRepository {
     }
 
     //DELETE
-    public async Task Deleteslab(Guid id) {
+    public async Task Deleteslab(int id) {
         var slab = await GetslabById(id);
 
         if (slab is null) throw new KeyNotFoundException("Id not found");
