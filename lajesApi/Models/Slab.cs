@@ -15,7 +15,7 @@ public class Slab {
         Name = name;
         Price = price;
         Weight = weight;
-    }
+    }   
 
     
 }
