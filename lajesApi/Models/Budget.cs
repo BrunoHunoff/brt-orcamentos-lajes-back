@@ -1,6 +1,7 @@
 public class Budget {
     public int Id { get; init; }
     public int CostumerId { get; private set; }
+    public string CostumerName { get; private set; }
     public double Footage { get; private set; }
     public double Value { get; private set; }
     public string City { get; private set; }
@@ -12,8 +13,9 @@ public class Budget {
 
     public List<BudgetSlab> Slabs { get; private set; } = new List<BudgetSlab>();
 
-    public Budget(int costumerId, double footage, double value, string city, string state, Freight freight) {
+    public Budget(int costumerId, string costumerName ,double footage, double value, string city, string state, Freight freight) {
         CostumerId = costumerId;
+        CostumerName = costumerName;
         Footage = footage;
         Value = value;
         City = city;
@@ -22,8 +24,9 @@ public class Budget {
         FreightId = freight.Id;
     }
 
-    public void UpdateBudget(int costumerId, double footage, double value, string city, string state, Freight freight, List<BudgetSlab> budgetSlabs) {
+    public void UpdateBudget(int costumerId, string costumerName ,double footage, double value, string city, string state, Freight freight, List<BudgetSlab> budgetSlabs) {
         CostumerId = costumerId;
+        CostumerName = costumerName;
         Footage = footage;
         Value = value;
         City = city;

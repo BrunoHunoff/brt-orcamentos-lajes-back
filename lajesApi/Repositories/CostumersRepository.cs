@@ -31,13 +31,13 @@ public class CostumersRepository {
     }
     
     //UPDATE
-    public async Task<Costumer?> Updatecostumer(int id, Costumer newCostumer){
+    public async Task<Costumer?> Updatecostumer(int id, AddCostumerRequest newCostumer){
 
         var costumer = await GetCostumerById(id);
 
         if (costumer is null) throw new KeyNotFoundException("Id not found");
 
-        costumer.Updatecostumer(newCostumer.Name, newCostumer.PJ, newCostumer.CnpjCpf, newCostumer.Cep, newCostumer.City, newCostumer.State, newCostumer.Address, newCostumer.AddressNumber, newCostumer.Email, newCostumer.PhoneNumber);
+        costumer.Updatecostumer(newCostumer.Name, newCostumer.Pj, newCostumer.CnpjCpf, newCostumer.Cep, newCostumer.City, newCostumer.State, newCostumer.Address, newCostumer.AddressNumber, newCostumer.Email, newCostumer.PhoneNumber);
 
         await dbContext.SaveChangesAsync();
 
