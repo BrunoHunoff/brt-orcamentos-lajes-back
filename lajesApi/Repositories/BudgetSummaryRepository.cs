@@ -24,13 +24,18 @@ public class BudgetSummaryRepository {
     }
     
     //UPDATE
-    public async Task<BudgetSummary?> UpdateBudgetSummary(int id, BudgetSummary newBudgetSummary){
+    public async Task<BudgetSummary?> UpdateBudgetSummary(int id, AddBudgetSummaryRequest newBudgetSummary){
 
         var budgetSummary = await GetBudgetSummaryById(id);
 
         if (budgetSummary is null) throw new KeyNotFoundException("Id not found");
 
-        budgetSummary.UpdateBudgetSummary(newBudgetSummary.Contribution, newBudgetSummary.Administration, newBudgetSummary.Taxes, newBudgetSummary.Extra, newBudgetSummary.FreightWeight);
+        budgetSummary.UpdateBudgetSummary(
+            newBudgetSummary.contribution, 
+            newBudgetSummary.administration, 
+            newBudgetSummary.taxes, 
+            newBudgetSummary.extra, 
+            newBudgetSummary.freightWeight);
 
         await dbContext.SaveChangesAsync();
 

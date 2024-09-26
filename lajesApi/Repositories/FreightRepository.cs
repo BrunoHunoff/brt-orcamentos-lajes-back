@@ -13,7 +13,7 @@ public class FreightRepository {
 
     
     //CREATE
-    public async Task AddfreightAsync(Freight freight) {
+    public async Task AddFreightAsync(Freight freight) {
 
         if (await FreightExists(freight.City, freight.State)) throw new Exception("city already registered");
 
@@ -31,13 +31,13 @@ public class FreightRepository {
     }
     
     //UPDATE
-    public async Task<Freight?> Updatefreight(int id, Freight newFreight){
+    public async Task<Freight?> UpdateFreight(int id, AddFreightRequest newFreight){
 
         var freight = await GetFreightById(id);
 
         if (freight is null) throw new KeyNotFoundException("Id not found");
 
-        freight.Updatefreight(newFreight.City, newFreight.State, newFreight.Price);
+        freight.Updatefreight(newFreight.city, newFreight.state, newFreight.price);
 
         await dbContext.SaveChangesAsync();
 
@@ -45,7 +45,7 @@ public class FreightRepository {
     }
 
     //DELETE
-    public async Task Deletefreight(int id) {
+    public async Task DeleteFreight(int id) {
         var freight = await GetFreightById(id);
 
         if (freight is null) throw new KeyNotFoundException("Id not found");
