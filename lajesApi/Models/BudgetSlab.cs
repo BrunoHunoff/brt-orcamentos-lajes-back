@@ -6,6 +6,8 @@ public class BudgetSlab {
     public double Length { get; private set; }
     public double Width { get; private set; }
 
+    public BudgetSlab(){}
+
     public BudgetSlab(int slabId, int budgetId, int slabsNumber ,double length, double width) {
         SlabId = slabId;
         BudgetId = budgetId;

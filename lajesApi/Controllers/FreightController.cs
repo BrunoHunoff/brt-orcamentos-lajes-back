@@ -12,7 +12,7 @@ public static class FreightController
             await freightRepository.GetAllFreights());
 
         //GET ID
-        freightEndpoints.MapGet("{id:id}", async ([FromRoute] int id, FreightRepository freightRepository) =>
+        freightEndpoints.MapGet("{id:int}", async ([FromRoute] int id, FreightRepository freightRepository) =>
         {
             var freight = await freightRepository.GetFreightById(id);
 
@@ -35,7 +35,7 @@ public static class FreightController
         });
 
         //PUT
-        freightEndpoints.MapPut("{id:id}", async ([FromRoute] int id, [FromBody] AddFreightRequest newFreight, [FromServices] FreightRepository freightRepository) =>
+        freightEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] AddFreightRequest newFreight, [FromServices] FreightRepository freightRepository) =>
         {
             try
             {
@@ -55,7 +55,7 @@ public static class FreightController
 
 
         //DELETE
-        freightEndpoints.MapDelete("{id:id}", async ([FromRoute] int id, [FromServices] FreightRepository freightRepository) =>
+        freightEndpoints.MapDelete("{id:int}", async ([FromRoute] int id, [FromServices] FreightRepository freightRepository) =>
         {
             try
             {

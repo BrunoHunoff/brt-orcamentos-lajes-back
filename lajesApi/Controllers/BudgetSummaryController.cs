@@ -12,7 +12,7 @@ public static class BudgetSummaryController
             await budgetSummaryRepository.GetAllBudgetSummarys());
 
         //GET ID
-        budgetSummaryEndpoints.MapGet("{id:id}", async ([FromRoute] int id, BudgetSummaryRepository budgetSummaryRepository) =>
+        budgetSummaryEndpoints.MapGet("{id:int}", async ([FromRoute] int id, BudgetSummaryRepository budgetSummaryRepository) =>
         {
             var budgetSummary = await budgetSummaryRepository.GetBudgetSummaryById(id);
 
@@ -38,7 +38,7 @@ public static class BudgetSummaryController
         });
 
         //PUT
-        budgetSummaryEndpoints.MapPut("{id:id}", async ([FromRoute] int id, [FromBody] AddBudgetSummaryRequest newBudgetSummary, [FromServices] BudgetSummaryRepository budgetSummaryRepository) =>
+        budgetSummaryEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] AddBudgetSummaryRequest newBudgetSummary, [FromServices] BudgetSummaryRepository budgetSummaryRepository) =>
         {
             try
             {
@@ -58,7 +58,7 @@ public static class BudgetSummaryController
 
 
         //DELETE
-        budgetSummaryEndpoints.MapDelete("{id:id}", async ([FromRoute] int id, [FromServices] BudgetSummaryRepository budgetSummaryRepository) =>
+        budgetSummaryEndpoints.MapDelete("{id:int}", async ([FromRoute] int id, [FromServices] BudgetSummaryRepository budgetSummaryRepository) =>
         {
             try
             {

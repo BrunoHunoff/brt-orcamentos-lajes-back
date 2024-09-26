@@ -7,6 +7,8 @@ public class BudgetSummary {
     public double Extra { get; private set;} 
     public double FreightWeight { get; private set; }
 
+    public BudgetSummary(){}
+
     public BudgetSummary(int budgetId, double contribution, double administration, double taxes, double extra, double freightWeight) {
         BudgetId = budgetId;
         Contribution = contribution;

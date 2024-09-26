@@ -13,6 +13,8 @@ public class Budget {
 
     public List<BudgetSlab> Slabs { get; private set; } = new List<BudgetSlab>();
 
+    public Budget(){}
+
     public Budget(int costumerId, string costumerName ,double footage, double value, string city, string state, Freight freight) {
         CostumerId = costumerId;
         CostumerName = costumerName;

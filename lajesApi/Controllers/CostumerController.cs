@@ -12,7 +12,7 @@ public static class CostumerController
             await costumerRepository.GetAllCostumers());
 
         //GET ID
-        costumerEndpoints.MapGet("{id:id}", async ([FromRoute] int id, CostumersRepository costumerRepository) =>
+        costumerEndpoints.MapGet("{id:int}", async ([FromRoute] int id, CostumersRepository costumerRepository) =>
         {
             var costumer = await costumerRepository.GetCostumerById(id);
 
@@ -31,7 +31,7 @@ public static class CostumerController
         });
 
         //PUT
-        costumerEndpoints.MapPut("{id:id}", async ([FromRoute] int id, [FromBody] AddCostumerRequest newCostumer, [FromServices] CostumersRepository costumerRepository) =>
+        costumerEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] AddCostumerRequest newCostumer, [FromServices] CostumersRepository costumerRepository) =>
         {
             try
             {
@@ -49,7 +49,7 @@ public static class CostumerController
 
 
         //DELETE
-        costumerEndpoints.MapDelete("{id:id}", async ([FromRoute] int id, [FromServices] CostumersRepository costumerRepository) => {
+        costumerEndpoints.MapDelete("{id:int}", async ([FromRoute] int id, [FromServices] CostumersRepository costumerRepository) => {
             try 
             {
                 await costumerRepository.Deletecostumer(id);

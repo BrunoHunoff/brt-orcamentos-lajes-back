@@ -11,6 +11,8 @@ public class Costumer {
     public string Email { get; private set; }
     public string PhoneNumber { get; private set; }
 
+    public Costumer(){}
+
     public Costumer(string name, bool pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber)
         {
             Name = name;
