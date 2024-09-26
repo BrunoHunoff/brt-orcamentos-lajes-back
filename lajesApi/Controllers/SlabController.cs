@@ -31,7 +31,7 @@ public static class SlabController
         });
 
         //PUT
-        slabEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] Slab novaslab, [FromServices] SlabsRepository slabRepository) =>
+        slabEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] AddSlabsRequest novaslab, [FromServices] SlabsRepository slabRepository) =>
         {
             try
             {

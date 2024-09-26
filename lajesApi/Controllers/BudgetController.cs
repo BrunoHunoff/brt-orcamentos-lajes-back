@@ -30,8 +30,7 @@ public static class BudgetController
                 request.footage,
                 request.value,
                 request.city,
-                request.state,
-                request.freight
+                request.state
             );
 
             await budgetRepository.AddBudgetAsync(newBudget);
@@ -39,7 +38,7 @@ public static class BudgetController
         });
 
         //PUT
-        budgetEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] AddBudgetRequest newBudget, [FromServices] BudgetRepository budgetRepository) =>
+        budgetEndpoints.MapPut("{id:int}", async ([FromRoute] int id, [FromBody] UpdateBudgetRequest newBudget, [FromServices] BudgetRepository budgetRepository) =>
         {
             try
             {

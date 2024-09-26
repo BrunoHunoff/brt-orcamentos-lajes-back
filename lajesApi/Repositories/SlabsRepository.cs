@@ -31,7 +31,7 @@ public class SlabsRepository {
     }
     
     //UPDATE
-    public async Task<Slab?> Updateslab(int id, Slab novaslab){
+    public async Task<Slab?> Updateslab(int id, AddSlabsRequest novaslab){
 
         var slab = await GetslabById(id);
 

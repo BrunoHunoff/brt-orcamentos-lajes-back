@@ -7,7 +7,7 @@ public class Budget {
     public string City { get; private set; }
     public string State { get; private set; }
 
-    public int FreightId { get; private set; }
+    public int? FreightId { get; private set; }
     
     public Freight Freight { get; private set; }
 
@@ -24,6 +24,17 @@ public class Budget {
         State = state;
         Freight = freight;
         FreightId = freight.Id;
+    }
+
+    public Budget(int costumerId, string costumerName ,double footage, double value, string city, string state) {
+        CostumerId = costumerId;
+        CostumerName = costumerName;
+        Footage = footage;
+        Value = value;
+        City = city;
+        State = state;
+        Freight = null;
+        FreightId = null;
     }
 
     public void UpdateBudget(int costumerId, string costumerName ,double footage, double value, string city, string state, Freight freight, List<BudgetSlab> budgetSlabs) {

@@ -4,7 +4,5 @@ public record AddBudgetRequest(
     double footage, 
     double value, 
     string city, 
-    string state, 
-    Freight freight, 
-    List<BudgetSlab> budgetSlabs
+    string state
 );

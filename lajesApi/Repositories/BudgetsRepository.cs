@@ -24,7 +24,7 @@ public class BudgetRepository {
     }
     
     //UPDATE
-    public async Task<Budget?> UpdateBudget(int id, AddBudgetRequest newBudget){
+    public async Task<Budget?> UpdateBudget(int id, UpdateBudgetRequest newBudget){
 
         var budget = await GetBudgetById(id);
 
