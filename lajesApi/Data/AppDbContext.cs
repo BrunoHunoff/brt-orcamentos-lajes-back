@@ -1,7 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext {
-    public DbSet<Laje> Lajes { get; set; }
+    public DbSet<Slab> slabs { get; set; }
+    public DbSet<Budget> budgets{ get; set; }
+    public DbSet<BudgetSlab> budgetSlabs{ get; set; }
+    public DbSet<BudgetSummary> budgetSummaries{ get; set; }
+    public DbSet<Costumer> costumers{ get; set; }
+    public DbSet<Freight> freights{ get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
