@@ -45,7 +45,7 @@ public class Budget {
         City = city;
         State = state;
         Freight = freight;
-        FreightId = freight.Id;
+        if(Freight is not null) {FreightId = freight.Id;}
         Slabs = budgetSlabs;
     }
 }
