@@ -23,7 +23,7 @@ public class Budget {
         City = city;
         State = state;
         Freight = freight;
-        FreightId = freight.Id;
+        if (freight is not null) FreightId = freight.Id;   
     }
 
     public Budget(int costumerId, string costumerName ,double footage, double value, string city, string state) {
@@ -45,7 +45,7 @@ public class Budget {
         City = city;
         State = state;
         Freight = freight;
-        if(Freight is not null) {FreightId = freight.Id;}
+        if(Freight is not null) FreightId = freight.Id;
         Slabs = budgetSlabs;
     }
 }
