@@ -48,4 +48,9 @@ public class Budget {
         if(Freight is not null) FreightId = freight.Id;
         Slabs = budgetSlabs;
     }
+
+    public void SetFreight(Freight freight) {
+        Freight = freight;
+        FreightId = freight?.Id; 
+    }
 }
