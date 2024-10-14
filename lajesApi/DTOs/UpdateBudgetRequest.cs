@@ -5,6 +5,6 @@ public record UpdateBudgetRequest(
     double value, 
     string city, 
     string state,
-    int freightId,
-    List<BudgetSlab> budgetSlabs
+    int? freightId,
+    List<UpdateBudgetSlabeRequest> slabs
 );

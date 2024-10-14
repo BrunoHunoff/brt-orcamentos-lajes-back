@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 public class BudgetRepository {
@@ -41,8 +42,7 @@ public class BudgetRepository {
             newBudget.Value, 
             newBudget.City, 
             newBudget.State, 
-            newBudget.Freight, 
-            newBudget.Slabs
+            newBudget.Freight
         );
 
         await dbContext.SaveChangesAsync();

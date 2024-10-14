@@ -1,4 +1,7 @@
-public class Budget {
+using Microsoft.AspNetCore.Mvc;
+
+public class Budget
+{
     public int Id { get; init; }
     public int CostumerId { get; private set; }
     public string CostumerName { get; private set; }
@@ -8,14 +11,15 @@ public class Budget {
     public string State { get; private set; }
 
     public int? FreightId { get; private set; }
-    
-    public Freight Freight { get; private set; }
+
+    public Freight? Freight { get; private set; }
 
     public List<BudgetSlab> Slabs { get; private set; } = new List<BudgetSlab>();
 
-    public Budget(){}
+    public Budget() { }
 
-    public Budget(int costumerId, string costumerName ,double footage, double value, string city, string state, Freight freight) {
+    public Budget(int costumerId, string costumerName, double footage, double value, string city, string state, Freight freight)
+    {
         CostumerId = costumerId;
         CostumerName = costumerName;
         Footage = footage;
@@ -23,10 +27,11 @@ public class Budget {
         City = city;
         State = state;
         Freight = freight;
-        if (freight is not null) FreightId = freight.Id;   
+        if (freight is not null) FreightId = freight.Id;
     }
 
-    public Budget(int costumerId, string costumerName ,double footage, double value, string city, string state) {
+    public Budget(int costumerId, string costumerName, double footage, double value, string city, string state)
+    {
         CostumerId = costumerId;
         CostumerName = costumerName;
         Footage = footage;
@@ -37,7 +42,8 @@ public class Budget {
         FreightId = null;
     }
 
-    public void UpdateBudget(int costumerId, string costumerName ,double footage, double value, string city, string state, Freight freight, List<BudgetSlab> budgetSlabs) {
+    public async void UpdateBudget(int costumerId, string costumerName, double footage, double value, string city, string state, Freight? freight)
+    {
         CostumerId = costumerId;
         CostumerName = costumerName;
         Footage = footage;
@@ -45,12 +51,12 @@ public class Budget {
         City = city;
         State = state;
         Freight = freight;
-        if(Freight is not null) FreightId = freight.Id;
-        Slabs = budgetSlabs;
+        FreightId = freight.Id;
     }
 
-    public void SetFreight(Freight freight) {
+    public void SetFreight(Freight freight)
+    {
         Freight = freight;
-        FreightId = freight?.Id; 
+        FreightId = freight?.Id;
     }
 }

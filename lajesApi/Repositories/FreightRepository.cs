@@ -26,7 +26,7 @@ public class FreightRepository {
         await dbContext.freights.ToListAsync();
 
     //READ ID
-    public async Task<Freight> GetFreightById(int id) {
+    public async Task<Freight> GetFreightById(int? id) {
         return await dbContext.freights.SingleOrDefaultAsync(freight => freight.Id == id);
     }
     
