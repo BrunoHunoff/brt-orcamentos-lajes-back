@@ -30,7 +30,7 @@ public class BudgetSlabsRepository {
 
         if (budgetSlab is null) throw new KeyNotFoundException("Id not found");
 
-        budgetSlab.UpdateBudgetSlab(newBudgetSlab.SlabId, newBudgetSlab.SlabsNumber, newBudgetSlab.Width, newBudgetSlab.Length);
+        budgetSlab.UpdateBudgetSlab(newBudgetSlab.SlabId, newBudgetSlab.SlabsNumber, newBudgetSlab.Overload ,newBudgetSlab.Width, newBudgetSlab.Length);
 
         await dbContext.SaveChangesAsync();
 

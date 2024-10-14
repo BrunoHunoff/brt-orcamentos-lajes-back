@@ -51,6 +51,7 @@ public static class BudgetController
                         slabRequest.slabId,
                         0,
                         slabRequest.slabsNumber,
+                        slabRequest.overload,
                         slabRequest.length,
                         slabRequest.width
                     );
@@ -119,6 +120,7 @@ public static class BudgetController
                     existingSlab.UpdateBudgetSlab(
                         slabRequest.slabId,
                         slabRequest.slabsNumber,
+                        slabRequest.overload,
                         slabRequest.length,
                         slabRequest.width
                     );
@@ -131,6 +133,7 @@ public static class BudgetController
                         slabRequest.slabId,
                         id,
                         slabRequest.slabsNumber,
+                        slabRequest.overload,
                         slabRequest.length,
                         slabRequest.width
                     );
