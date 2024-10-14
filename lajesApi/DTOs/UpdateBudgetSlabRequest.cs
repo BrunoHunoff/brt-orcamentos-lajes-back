@@ -1,7 +1,8 @@
 public record UpdateBudgetSlabeRequest(
-    int slabId, 
-    int slabsNumber,
-    double overload,
-    double length, 
-    double width
+    int Id,
+    int SlabId, 
+    int SlabsNumber,
+    double Overload,
+    double Length, 
+    double Width
 );
