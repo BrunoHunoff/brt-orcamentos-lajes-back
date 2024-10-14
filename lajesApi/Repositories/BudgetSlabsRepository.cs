@@ -28,7 +28,7 @@ public class BudgetSlabsRepository {
 
         var budgetSlab = await GetBudgetSlabById(id);
 
-        if (budgetSlab is null) throw new KeyNotFoundException("Id not found");
+        if (budgetSlab is null) throw new KeyNotFoundException("BudgetSlab Id not found");
 
         budgetSlab.UpdateBudgetSlab(newBudgetSlab.SlabId, newBudgetSlab.SlabsNumber, newBudgetSlab.Overload ,newBudgetSlab.Width, newBudgetSlab.Length);
 

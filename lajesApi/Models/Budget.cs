@@ -30,6 +30,17 @@ public class Budget
         if (freight is not null) FreightId = freight.Id;
     }
 
+    public Budget(int costumerId, string costumerName, double footage, double value, string city, string state, int? freightId)
+    {
+        CostumerId = costumerId;
+        CostumerName = costumerName;
+        Footage = footage;
+        Value = value;
+        City = city;
+        State = state;
+        FreightId = freightId;
+    }
+
     public Budget(int costumerId, string costumerName, double footage, double value, string city, string state)
     {
         CostumerId = costumerId;
@@ -42,7 +53,7 @@ public class Budget
         FreightId = null;
     }
 
-    public async void UpdateBudget(int costumerId, string costumerName, double footage, double value, string city, string state, Freight? freight)
+    public async void UpdateBudget(int costumerId, string costumerName, double footage, double value, string city, string state, int? freightId)
     {
         CostumerId = costumerId;
         CostumerName = costumerName;
@@ -50,8 +61,7 @@ public class Budget
         Value = value;
         City = city;
         State = state;
-        Freight = freight;
-        FreightId = freight.Id;
+        FreightId = freightId;
     }
 
     public void SetFreight(Freight freight)
@@ -59,4 +69,16 @@ public class Budget
         Freight = freight;
         FreightId = freight?.Id;
     }
+
+    public override string ToString()
+{
+    return $"CustomerId: {CostumerId}, " +
+           $"CustomerName: {CostumerName}, " +
+           $"Footage: {Footage}, " +
+           $"Value: {Value}, " +
+           $"City: {City}, " +
+           $"State: {State}, " +
+           $"FreightId: {FreightId}, " +
+           $"Freight: {Freight}";
+}
 }

@@ -42,10 +42,17 @@ public class BudgetRepository {
             newBudget.Value, 
             newBudget.City, 
             newBudget.State, 
-            newBudget.Freight
+            newBudget.FreightId
         );
+        
+        if (budget is null) throw new Exception("Error creating budget");
+
 
         await dbContext.SaveChangesAsync();
+        
+        Console.WriteLine(budget.ToString());
+        Console.WriteLine("Oi");
+
 
         return budget;
     }
