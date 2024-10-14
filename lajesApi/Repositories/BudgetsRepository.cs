@@ -16,29 +16,33 @@ public class BudgetRepository {
 
     //READ ALL
     public async Task<List<Budget>> GetAllBudget() => 
-        await dbContext.budgets.ToListAsync();
+        await dbContext.budgets.Include(b => b.Slabs).ToListAsync();
+
 
     //READ ID
     public async Task<Budget> GetBudgetById(int id) {
-        return await dbContext.budgets.SingleOrDefaultAsync(budget => budget.Id == id);
-    }
+    return await dbContext.budgets
+        .Include(b => b.Slabs)
+        .SingleOrDefaultAsync(budget => budget.Id == id);
+}
+
     
     //UPDATE
-    public async Task<Budget?> UpdateBudget(int id, UpdateBudgetRequest newBudget){
+    public async Task<Budget?> UpdateBudget(int id, Budget newBudget){
 
         var budget = await GetBudgetById(id);
 
         if (budget is null) throw new KeyNotFoundException("Id not found");
 
         budget.UpdateBudget(
-            newBudget.costumerId, 
-            newBudget.costumerName, 
-            newBudget.footage, 
-            newBudget.value, 
-            newBudget.city, 
-            newBudget.state, 
-            newBudget.freight, 
-            newBudget.budgetSlabs
+            newBudget.CostumerId, 
+            newBudget.CostumerName, 
+            newBudget.Footage, 
+            newBudget.Value, 
+            newBudget.City, 
+            newBudget.State, 
+            newBudget.Freight, 
+            newBudget.Slabs
         );
 
         await dbContext.SaveChangesAsync();
