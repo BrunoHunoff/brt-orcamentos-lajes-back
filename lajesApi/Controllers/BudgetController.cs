@@ -100,8 +100,6 @@ public static class BudgetController
                         request.freightId
                     );
 
-                    Console.WriteLine(updatedBudget.ToString());
-
                     if (updatedBudget is null)
                         throw new Exception("UpdateBudget nulo");
 
