@@ -78,98 +78,103 @@ public static class BudgetController
 
         // PUT
         budgetEndpoints.MapPut(
-    "{id:int}",
-    async (
-        [FromRoute] int id,
-        [FromBody] UpdateBudgetRequest request,
-        [FromServices] BudgetRepository budgetRepository,
-        [FromServices] BudgetSlabsRepository budgetSlabsRepository,
-        [FromServices] FreightRepository freightRepository
-    ) =>
-    {
-        try
-        {
-            // Criar um novo objeto Budget a partir da requisição
-            var updatedBudget = new Budget(
-                request.costumerId,
-                request.costumerName,
-                request.footage,
-                request.value,
-                request.city,
-                request.state,
-                request.freightId
-            );
-
-            Console.WriteLine(updatedBudget.ToString());
-
-            if (updatedBudget is null) throw new Exception("UpdateBudget nulo");
-
-            var response = await budgetRepository.UpdateBudget(id, updatedBudget);
-
-            var existingSlabs = await budgetSlabsRepository.GetAllBudgetSlabs();
-
-            // Atualizar ou criar novas BudgetSlabs
-            foreach (UpdateBudgetSlabeRequest slabRequest in request.slabs)
+            "{id:int}",
+            async (
+                [FromRoute] int id,
+                [FromBody] UpdateBudgetRequest request,
+                [FromServices] BudgetRepository budgetRepository,
+                [FromServices] BudgetSlabsRepository budgetSlabsRepository,
+                [FromServices] FreightRepository freightRepository
+            ) =>
             {
-                BudgetSlab existingSlab = await budgetSlabsRepository.GetBudgetSlabById(slabRequest.Id);
+                try
+                {
+                    // Criar um novo objeto Budget a partir da requisição
+                    var updatedBudget = new Budget(
+                        request.costumerId,
+                        request.costumerName,
+                        request.footage,
+                        request.value,
+                        request.city,
+                        request.state,
+                        request.freightId
+                    );
 
-                if (existingSlab != null)
-                {
-                    // Atualiza a BudgetSlab existente
-                    existingSlab.UpdateBudgetSlab(
-                        slabRequest.SlabId,
-                        slabRequest.SlabsNumber,
-                        slabRequest.Overload,
-                        slabRequest.Length,
-                        slabRequest.Width
-                    );
-                    await budgetSlabsRepository.UpdateBudgetSlab(existingSlab.Id, existingSlab);
+                    Console.WriteLine(updatedBudget.ToString());
+
+                    if (updatedBudget is null)
+                        throw new Exception("UpdateBudget nulo");
+
+                    var response = await budgetRepository.UpdateBudget(id, updatedBudget);
+
+                    var existingSlabs = await budgetSlabsRepository.GetAllBudgetSlabs();
+
+                    // Atualizar ou criar novas BudgetSlabs
+                    foreach (UpdateBudgetSlabeRequest slabRequest in request.slabs)
+                    {
+                        BudgetSlab existingSlab = await budgetSlabsRepository.GetBudgetSlabById(
+                            slabRequest.Id
+                        );
+
+                        if (existingSlab != null)
+                        {
+                            // Atualiza a BudgetSlab existente
+                            existingSlab.UpdateBudgetSlab(
+                                slabRequest.SlabId,
+                                slabRequest.SlabsNumber,
+                                slabRequest.Overload,
+                                slabRequest.Length,
+                                slabRequest.Width
+                            );
+                            await budgetSlabsRepository.UpdateBudgetSlab(
+                                existingSlab.Id,
+                                existingSlab
+                            );
+                        }
+                        else
+                        {
+                            var newSlab = new BudgetSlab(
+                                slabRequest.SlabId,
+                                id,
+                                slabRequest.SlabsNumber,
+                                slabRequest.Overload,
+                                slabRequest.Length,
+                                slabRequest.Width
+                            );
+                            await budgetSlabsRepository.AddBudgetSlabAsync(newSlab);
+                        }
+                    }
+
+                    var slabIdsFromRequest = request.slabs.Select(s => s.Id).ToHashSet();
+
+                    // Remover BudgetSlabs que não estão mais na requisição
+                    var slabsToRemove = existingSlabs
+                        .Where(s => s.BudgetId == id)
+                        .Where(s => !slabIdsFromRequest.Contains(s.Id))
+                        .ToList();
+
+                    foreach (var slab in slabsToRemove)
+                    {
+                        Console.WriteLine(slab.ToString());
+                        await budgetSlabsRepository.DeleteBudgetSlab(slab.Id);
+                    }
+
+                    return Results.Ok(response);
                 }
-                else
+                catch (KeyNotFoundException e)
                 {
-                    var newSlab = new BudgetSlab(
-                        slabRequest.SlabId,
-                        id,
-                        slabRequest.SlabsNumber,
-                        slabRequest.Overload,
-                        slabRequest.Length,
-                        slabRequest.Width
-                    );
-                    await budgetSlabsRepository.AddBudgetSlabAsync(newSlab);
+                    return Results.NotFound(e.Message);
+                }
+                catch (DbUpdateException e)
+                {
+                    return Results.Problem("Error saving changes: " + e.Message);
+                }
+                catch (Exception e)
+                {
+                    return Results.Problem("An unexpected error occurred: " + e.Message);
                 }
             }
-
-            var slabIdsFromRequest = request.slabs.Select(s => s.Id).ToHashSet();
-
-            // Remover BudgetSlabs que não estão mais na requisição
-            var slabsToRemove = existingSlabs
-    .Where(s => s.BudgetId == id)   // Apenas lajes do orçamento atual
-    .Where(s => !slabIdsFromRequest.Contains(s.Id))  // Que não estão na requisição
-    .ToList();
-
-            foreach (var slab in slabsToRemove)
-            {
-                Console.WriteLine(slab.ToString());
-                await budgetSlabsRepository.DeleteBudgetSlab(slab.Id);
-            }
-
-            return Results.Ok(response);
-        }
-        catch (KeyNotFoundException e)
-        {
-            return Results.NotFound(e.Message);
-        }
-        catch (DbUpdateException e)
-        {
-            return Results.Problem("Error saving changes: " + e.Message);
-        }
-        catch (Exception e)
-        {
-            return Results.Problem("An unexpected error occurred: " + e.Message);
-        }
-    }
-);
-
+        );
 
         // DELETE
         budgetEndpoints.MapDelete(
