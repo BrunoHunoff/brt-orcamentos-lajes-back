@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Bcpg.Sig;
 
 public class BudgetRepository
 {
@@ -15,6 +16,8 @@ public class BudgetRepository
     //CREATE
     public async Task AddBudgetAsync(Budget budget)
     {
+        VerifyBudgetData(budget);
+
         await dbContext.budgets.AddAsync(budget);
         await dbContext.SaveChangesAsync();
     }
@@ -39,12 +42,7 @@ public class BudgetRepository
         if (budget is null)
             throw new KeyNotFoundException("Id not found");
 
-        if (await costumersRepository.GetCostumerById(newBudget.CostumerId) is null)
-            throw new KeyNotFoundException("Invalid costumerId");
-
-        if (await freightRepository.GetFreightById(newBudget.FreightId) is null)
-            throw new KeyNotFoundException("Invalid freightId");
-            
+        VerifyBudgetData(newBudget);
 
         budget.UpdateBudget(
             newBudget.CostumerId,
@@ -78,5 +76,13 @@ public class BudgetRepository
         dbContext.budgets.Remove(budget);
 
         await dbContext.SaveChangesAsync();
+    }
+
+    private async void VerifyBudgetData(Budget budget) {
+        if (await costumersRepository.GetCostumerById(budget.CostumerId) is null)
+            throw new KeyNotFoundException("Invalid costumerId");
+
+        if (await freightRepository.GetFreightById(budget.FreightId) is null)
+            throw new KeyNotFoundException("Invalid freightId");
     }
 }

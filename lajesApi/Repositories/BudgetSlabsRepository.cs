@@ -4,6 +4,7 @@ public class BudgetSlabsRepository {
     private readonly AppDbContext dbContext;
 
     private readonly SlabsRepository slabsRepository;
+    private readonly BudgetRepository budgetRepository;
 
     public BudgetSlabsRepository(AppDbContext AppdbContext) {
         dbContext = AppdbContext;
@@ -12,6 +13,7 @@ public class BudgetSlabsRepository {
     //CREATE
     public async Task AddBudgetSlabAsync(BudgetSlab budgetSlab) {
 
+        VerifyBudgetSlabData(budgetSlab);
 
         await dbContext.budgetSlabs.AddAsync(budgetSlab);
         await dbContext.SaveChangesAsync();
@@ -32,6 +34,8 @@ public class BudgetSlabsRepository {
         var budgetSlab = await GetBudgetSlabById(id);
 
         if (budgetSlab is null) throw new KeyNotFoundException("BudgetSlab Id not found");
+
+        VerifyBudgetSlabData(newBudgetSlab);
 
 
         if (await slabsRepository.GetslabById(newBudgetSlab.SlabId) is null)
@@ -54,4 +58,13 @@ public class BudgetSlabsRepository {
 
         await dbContext.SaveChangesAsync();
     }
+
+    private async void VerifyBudgetSlabData(BudgetSlab budgetSlab) {
+        if (budgetRepository.GetBudgetById(budgetSlab.BudgetId) is null) 
+            throw new KeyNotFoundException("BudgetId not found");
+
+        if (slabsRepository.GetslabById(budgetSlab.SlabId) is null)
+            throw new KeyNotFoundException("SlabId not found");
+    }
+
 }
