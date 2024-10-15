@@ -25,4 +25,12 @@ public class BudgetSlab {
         Length = length;
         Width = width;
     }
+
+    public override string ToString()
+{
+    return $"BudgetSlab: Id = {Id}, SlabId = {SlabId}, BudgetId = {BudgetId}, " +
+           $"SlabsNumber = {SlabsNumber}, Overload = {Overload}, " +
+           $"Length = {Length}, Width = {Width}";
+}
+
 }

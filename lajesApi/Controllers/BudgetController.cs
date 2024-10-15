@@ -127,10 +127,9 @@ public static class BudgetController
                 }
                 else
                 {
-                    // Cria uma nova BudgetSlab
                     var newSlab = new BudgetSlab(
                         slabRequest.SlabId,
-                        id, // O ID do orçamento
+                        id,
                         slabRequest.SlabsNumber,
                         slabRequest.Overload,
                         slabRequest.Length,
@@ -140,16 +139,17 @@ public static class BudgetController
                 }
             }
 
-            // Obter os IDs dos slabs da requisição
-            var slabIdsFromRequest = request.slabs.Select(s => s.SlabId).ToHashSet();
+            var slabIdsFromRequest = request.slabs.Select(s => s.Id).ToHashSet();
 
             // Remover BudgetSlabs que não estão mais na requisição
             var slabsToRemove = existingSlabs
-                .Where(s => !slabIdsFromRequest.Contains(s.SlabId))
-                .ToList();
+    .Where(s => s.BudgetId == id)   // Apenas lajes do orçamento atual
+    .Where(s => !slabIdsFromRequest.Contains(s.Id))  // Que não estão na requisição
+    .ToList();
 
             foreach (var slab in slabsToRemove)
             {
+                Console.WriteLine(slab.ToString());
                 await budgetSlabsRepository.DeleteBudgetSlab(slab.Id);
             }
 
