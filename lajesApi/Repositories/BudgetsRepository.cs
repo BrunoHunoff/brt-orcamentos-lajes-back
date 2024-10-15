@@ -8,15 +8,21 @@ public class BudgetRepository
     private readonly CostumersRepository costumersRepository;
     private readonly FreightRepository freightRepository;
 
-    public BudgetRepository(AppDbContext AppdbContext)
+    public BudgetRepository(
+        AppDbContext AppdbContext,
+        FreightRepository FreightRepository,
+        CostumersRepository CostumersRepository
+    )
     {
         dbContext = AppdbContext;
+        freightRepository = FreightRepository;
+        costumersRepository = CostumersRepository;
     }
 
     //CREATE
     public async Task AddBudgetAsync(Budget budget)
     {
-        VerifyBudgetData(budget);
+        await VerifyBudgetData(budget);
 
         await dbContext.budgets.AddAsync(budget);
         await dbContext.SaveChangesAsync();
@@ -42,7 +48,7 @@ public class BudgetRepository
         if (budget is null)
             throw new KeyNotFoundException("Id not found");
 
-        VerifyBudgetData(newBudget);
+        await VerifyBudgetData(newBudget);
 
         budget.UpdateBudget(
             newBudget.CostumerId,
@@ -78,7 +84,8 @@ public class BudgetRepository
         await dbContext.SaveChangesAsync();
     }
 
-    private async void VerifyBudgetData(Budget budget) {
+    private async Task VerifyBudgetData(Budget budget)
+    {
         if (await costumersRepository.GetCostumerById(budget.CostumerId) is null)
             throw new KeyNotFoundException("Invalid costumerId");
 
