@@ -35,6 +35,8 @@ public class SlabsRepository {
 
         var slab = await GetslabById(id);
 
+        Console.WriteLine("To aqui");
+
         if (slab is null) throw new KeyNotFoundException("Id not found");
 
         slab.UpdateSlab(novaslab.Name, novaslab.Price, novaslab.Weight);
