@@ -65,9 +65,6 @@ public class BudgetRepository
 
         await dbContext.SaveChangesAsync();
 
-        Console.WriteLine(budget.ToString());
-        Console.WriteLine("Oi");
-
         return budget;
     }
 

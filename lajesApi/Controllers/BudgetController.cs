@@ -153,7 +153,6 @@ public static class BudgetController
 
                     foreach (var slab in slabsToRemove)
                     {
-                        Console.WriteLine(slab.ToString());
                         await budgetSlabsRepository.DeleteBudgetSlab(slab.Id);
                     }
 
