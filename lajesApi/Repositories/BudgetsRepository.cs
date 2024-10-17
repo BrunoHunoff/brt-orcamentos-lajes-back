@@ -65,7 +65,8 @@ public class BudgetRepository
             newBudget.Profit,
             newBudget.Taxes,
             newBudget.Extra,
-            newBudget.FreightId
+            newBudget.FreightId,
+            newBudget.FreightPrice
         );
 
         if (budget is null)

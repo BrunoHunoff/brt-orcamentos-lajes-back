@@ -6,6 +6,7 @@ public record AddBudgetRequest(
     string city,
     string state,
     int? freightId,
+    double freightPrice,
     double administration,
     double profit,
     double taxes,
