@@ -45,6 +45,7 @@ public static class BudgetController
                     request.value,
                     request.city,
                     request.state,
+                    request.freightPrice,
                     request.administration,
                     request.profit,
                     request.taxes,
@@ -105,7 +106,8 @@ public static class BudgetController
                         request.profit,
                         request.taxes,
                         request.extra,
-                        request.freightId
+                        request.freightId,
+                        request.freightPrice
                     );
 
                     if (updatedBudget is null)

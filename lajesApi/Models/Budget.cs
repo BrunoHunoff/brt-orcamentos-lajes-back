@@ -10,12 +10,13 @@ public class Budget
     public string City { get; private set; }
     public string State { get; private set; }
     public int? FreightId { get; private set; }
+    public Freight? Freight { get; private set; }
+    public double FreightPrice { get; private set; }
     public double Administration { get; private set; }
     public double Profit { get; private set; }
     public double Taxes { get; private set; }
     public double Extra { get; private set; }
 
-    public Freight? Freight { get; private set; }
 
     public List<BudgetSlab> Slabs { get; private set; } = new List<BudgetSlab>();
 
@@ -28,11 +29,13 @@ public class Budget
         double value,
         string city,
         string state,
+        double freightPrice,
         double administration,
         double profit,
         double taxes,
         double extra,
         Freight freight
+        
     )
     {
         CostumerId = costumerId;
@@ -48,6 +51,7 @@ public class Budget
         Extra = extra;
         if (freight is not null)
             FreightId = freight.Id;
+        FreightPrice = freightPrice;
     }
 
     public Budget(
@@ -61,7 +65,8 @@ public class Budget
         double profit,
         double taxes,
         double extra,
-        int? freightId
+        int? freightId,
+        double freightPrice
     )
     {
         CostumerId = costumerId;
@@ -75,6 +80,7 @@ public class Budget
         Taxes = taxes;
         Extra = extra;
         FreightId = freightId;
+        FreightPrice = freightPrice;
     }
 
     public Budget(
@@ -87,7 +93,8 @@ public class Budget
         double administration,
         double profit,
         double taxes,
-        double extra
+        double extra,
+        double freightPrice
     )
     {
         CostumerId = costumerId;
@@ -102,6 +109,7 @@ public class Budget
         Extra = extra;
         Freight = null;
         FreightId = null;
+        FreightPrice = freightPrice;
     }
 
     public async void UpdateBudget(
@@ -115,7 +123,8 @@ public class Budget
         double profit,
         double taxes,
         double extra,
-        int? freightId
+        int? freightId,
+        double freightPrice
     )
     {
         CostumerId = costumerId;
@@ -129,6 +138,7 @@ public class Budget
         Taxes = taxes;
         Extra = extra;
         FreightId = freightId;
+        FreightPrice = freightPrice;
     }
 
     public void SetFreight(Freight freight)
