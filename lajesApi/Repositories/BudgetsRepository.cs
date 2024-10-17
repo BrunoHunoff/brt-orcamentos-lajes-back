@@ -30,13 +30,17 @@ public class BudgetRepository
 
     //READ ALL
     public async Task<List<Budget>> GetAllBudget() =>
-        await dbContext.budgets.Include(b => b.Slabs).ToListAsync();
-
+    await dbContext.budgets
+        .Include(b => b.Slabs)
+        .Include(b => b.Freight)
+        .ToListAsync();
     //READ ID
     public async Task<Budget> GetBudgetById(int id)
     {
         return await dbContext
-            .budgets.Include(b => b.Slabs)
+            .budgets
+            .Include(b => b.Slabs)
+            .Include(b => b.Freight)
             .SingleOrDefaultAsync(budget => budget.Id == id);
     }
 
@@ -57,6 +61,10 @@ public class BudgetRepository
             newBudget.Value,
             newBudget.City,
             newBudget.State,
+            newBudget.Administration,
+            newBudget.Profit,
+            newBudget.Taxes,
+            newBudget.Extra,
             newBudget.FreightId
         );
 
@@ -86,7 +94,7 @@ public class BudgetRepository
         if (await costumersRepository.GetCostumerById(budget.CostumerId) is null)
             throw new KeyNotFoundException("Invalid costumerId");
 
-        if (await freightRepository.GetFreightById(budget.FreightId) is null)
+        if (await freightRepository.GetFreightById(budget.FreightId) is null && budget.FreightId != null)
             throw new KeyNotFoundException("Invalid freightId");
     }
 }
