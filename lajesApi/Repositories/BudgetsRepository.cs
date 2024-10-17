@@ -57,6 +57,10 @@ public class BudgetRepository
             newBudget.Value,
             newBudget.City,
             newBudget.State,
+            newBudget.Administration,
+            newBudget.Profit,
+            newBudget.Taxes,
+            newBudget.Extra,
             newBudget.FreightId
         );
 

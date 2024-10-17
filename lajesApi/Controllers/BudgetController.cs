@@ -44,7 +44,11 @@ public static class BudgetController
                     request.footage,
                     request.value,
                     request.city,
-                    request.state
+                    request.state,
+                    request.administration,
+                    request.profit,
+                    request.taxes,
+                    request.extra
                 );
 
                 foreach (AddBudgetSlabRequest slabRequest in request.slabs)
@@ -97,6 +101,10 @@ public static class BudgetController
                         request.value,
                         request.city,
                         request.state,
+                        request.administration,
+                        request.profit,
+                        request.taxes,
+                        request.extra,
                         request.freightId
                     );
 

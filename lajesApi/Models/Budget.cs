@@ -9,8 +9,11 @@ public class Budget
     public double Value { get; private set; }
     public string City { get; private set; }
     public string State { get; private set; }
-
     public int? FreightId { get; private set; }
+    public double Administration { get; private set; }
+    public double Profit { get; private set; }
+    public double Taxes { get; private set; }
+    public double Extra { get; private set; }
 
     public Freight? Freight { get; private set; }
 
@@ -18,7 +21,19 @@ public class Budget
 
     public Budget() { }
 
-    public Budget(int costumerId, string costumerName, double footage, double value, string city, string state, Freight freight)
+    public Budget(
+        int costumerId,
+        string costumerName,
+        double footage,
+        double value,
+        string city,
+        string state,
+        double administration,
+        double profit,
+        double taxes,
+        double extra,
+        Freight freight
+    )
     {
         CostumerId = costumerId;
         CostumerName = costumerName;
@@ -27,10 +42,27 @@ public class Budget
         City = city;
         State = state;
         Freight = freight;
-        if (freight is not null) FreightId = freight.Id;
+        Administration = administration;
+        Profit = profit;
+        Taxes = taxes;
+        Extra = extra;
+        if (freight is not null)
+            FreightId = freight.Id;
     }
 
-    public Budget(int costumerId, string costumerName, double footage, double value, string city, string state, int? freightId)
+    public Budget(
+        int costumerId,
+        string costumerName,
+        double footage,
+        double value,
+        string city,
+        string state,
+        double administration,
+        double profit,
+        double taxes,
+        double extra,
+        int? freightId
+    )
     {
         CostumerId = costumerId;
         CostumerName = costumerName;
@@ -38,10 +70,25 @@ public class Budget
         Value = value;
         City = city;
         State = state;
+        Administration = administration;
+        Profit = profit;
+        Taxes = taxes;
+        Extra = extra;
         FreightId = freightId;
     }
 
-    public Budget(int costumerId, string costumerName, double footage, double value, string city, string state)
+    public Budget(
+        int costumerId,
+        string costumerName,
+        double footage,
+        double value,
+        string city,
+        string state,
+        double administration,
+        double profit,
+        double taxes,
+        double extra
+    )
     {
         CostumerId = costumerId;
         CostumerName = costumerName;
@@ -49,11 +96,27 @@ public class Budget
         Value = value;
         City = city;
         State = state;
+        Administration = administration;
+        Profit = profit;
+        Taxes = taxes;
+        Extra = extra;
         Freight = null;
         FreightId = null;
     }
 
-    public async void UpdateBudget(int costumerId, string costumerName, double footage, double value, string city, string state, int? freightId)
+    public async void UpdateBudget(
+        int costumerId,
+        string costumerName,
+        double footage,
+        double value,
+        string city,
+        string state,
+        double administration,
+        double profit,
+        double taxes,
+        double extra,
+        int? freightId
+    )
     {
         CostumerId = costumerId;
         CostumerName = costumerName;
@@ -61,6 +124,10 @@ public class Budget
         Value = value;
         City = city;
         State = state;
+        Administration = administration;
+        Profit = profit;
+        Taxes = taxes;
+        Extra = extra;
         FreightId = freightId;
     }
 
@@ -71,14 +138,14 @@ public class Budget
     }
 
     public override string ToString()
-{
-    return $"CustomerId: {CostumerId}, " +
-           $"CustomerName: {CostumerName}, " +
-           $"Footage: {Footage}, " +
-           $"Value: {Value}, " +
-           $"City: {City}, " +
-           $"State: {State}, " +
-           $"FreightId: {FreightId}, " +
-           $"Freight: {Freight}";
-}
+    {
+        return $"CustomerId: {CostumerId}, "
+            + $"CustomerName: {CostumerName}, "
+            + $"Footage: {Footage}, "
+            + $"Value: {Value}, "
+            + $"City: {City}, "
+            + $"State: {State}, "
+            + $"FreightId: {FreightId}, "
+            + $"Freight: {Freight}";
+    }
 }

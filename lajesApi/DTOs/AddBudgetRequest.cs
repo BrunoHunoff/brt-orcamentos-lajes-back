@@ -1,10 +1,14 @@
 public record AddBudgetRequest(
     int costumerId,
     string costumerName,
-    double footage, 
-    double value, 
-    string city, 
+    double footage,
+    double value,
+    string city,
     string state,
-    int? freightId, 
+    int? freightId,
+    double administration,
+    double profit,
+    double taxes,
+    double extra,
     List<AddBudgetSlabRequest> slabs
 );

@@ -18,7 +18,6 @@ builder.Services.AddScoped<CostumersRepository>();
 builder.Services.AddScoped<FreightRepository>();
 builder.Services.AddScoped<BudgetRepository>();
 builder.Services.AddScoped<BudgetSlabsRepository>();
-builder.Services.AddScoped<BudgetSummaryRepository>();
 
 builder.Services.AddScoped<AppDbContext>();
 
@@ -40,7 +39,6 @@ app.UseHttpsRedirection();
 
 app.AddSlabEndpoints();
 app.AddBudgetEndpoints();
-app.AddBudgetSummaryEndpoints();
 app.AddCostumerEndpoints();
 app.AddFreightEndpoints();
 
