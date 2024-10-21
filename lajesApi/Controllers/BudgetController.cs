@@ -1,4 +1,3 @@
-using System.Data.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,17 +33,20 @@ public static class BudgetController
             "",
             async (
                 AddBudgetRequest request,
-                [FromServices] BudgetRepository budgetRepository,
-                [FromServices] FreightRepository freightRepository
+                [FromServices] BudgetRepository budgetRepository
             ) =>
             {
                 var newBudget = new Budget(
                     request.costumerId,
                     request.costumerName,
                     request.footage,
-                    request.value,
+                    request.totalWeight,
+                    request.cost,
+                    request.sellPrice,
                     request.city,
                     request.state,
+                    request.freightWeight,
+                    request.freightType,
                     request.freightPrice,
                     request.administration,
                     request.profit,
@@ -66,15 +68,6 @@ public static class BudgetController
                     newBudget.Slabs.Add(budgetSlab);
                 }
 
-                if (request.freightId.HasValue)
-                {
-                    var freight = await freightRepository.GetFreightById(request.freightId.Value);
-                    if (freight != null)
-                    {
-                        newBudget.SetFreight(freight);
-                    }
-                }
-
                 await budgetRepository.AddBudgetAsync(newBudget);
 
                 return Results.Ok(newBudget);
@@ -88,26 +81,27 @@ public static class BudgetController
                 [FromRoute] int id,
                 [FromBody] UpdateBudgetRequest request,
                 [FromServices] BudgetRepository budgetRepository,
-                [FromServices] BudgetSlabsRepository budgetSlabsRepository,
-                [FromServices] FreightRepository freightRepository
+                [FromServices] BudgetSlabsRepository budgetSlabsRepository
             ) =>
             {
                 try
                 {
-                    // Criar um novo objeto Budget a partir da requisição
                     var updatedBudget = new Budget(
                         request.costumerId,
                         request.costumerName,
                         request.footage,
-                        request.value,
+                        request.totalWeight,
+                        request.cost,
+                        request.sellPrice,
                         request.city,
                         request.state,
+                        request.freightWeight,
+                        request.freightType,
+                        request.freightPrice,
                         request.administration,
                         request.profit,
                         request.taxes,
-                        request.extra,
-                        request.freightId,
-                        request.freightPrice
+                        request.extra
                     );
 
                     if (updatedBudget is null)

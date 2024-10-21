@@ -15,7 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SlabsRepository>();
 builder.Services.AddScoped<CostumersRepository>();
-builder.Services.AddScoped<FreightRepository>();
 builder.Services.AddScoped<BudgetRepository>();
 builder.Services.AddScoped<BudgetSlabsRepository>();
 
@@ -40,7 +39,6 @@ app.UseHttpsRedirection();
 app.AddSlabEndpoints();
 app.AddBudgetEndpoints();
 app.AddCostumerEndpoints();
-app.AddFreightEndpoints();
 
 
 app.Run();
