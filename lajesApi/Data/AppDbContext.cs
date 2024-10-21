@@ -5,7 +5,6 @@ public class AppDbContext : DbContext {
     public DbSet<Budget> budgets{ get; set; }
     public DbSet<BudgetSlab> budgetSlabs{ get; set; }
     public DbSet<Costumer> costumers{ get; set; }
-    public DbSet<Freight> freights{ get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

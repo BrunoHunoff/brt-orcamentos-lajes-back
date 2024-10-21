@@ -1,21 +1,16 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Bcpg.Sig;
 
 public class BudgetRepository
 {
     private readonly AppDbContext dbContext;
     private readonly CostumersRepository costumersRepository;
-    private readonly FreightRepository freightRepository;
 
     public BudgetRepository(
         AppDbContext AppdbContext,
-        FreightRepository FreightRepository,
         CostumersRepository CostumersRepository
     )
     {
         dbContext = AppdbContext;
-        freightRepository = FreightRepository;
         costumersRepository = CostumersRepository;
     }
 
@@ -32,7 +27,6 @@ public class BudgetRepository
     public async Task<List<Budget>> GetAllBudget() =>
     await dbContext.budgets
         .Include(b => b.Slabs)
-        .Include(b => b.Freight)
         .ToListAsync();
     //READ ID
     public async Task<Budget> GetBudgetById(int id)
@@ -40,7 +34,6 @@ public class BudgetRepository
         return await dbContext
             .budgets
             .Include(b => b.Slabs)
-            .Include(b => b.Freight)
             .SingleOrDefaultAsync(budget => budget.Id == id);
     }
 
@@ -58,15 +51,17 @@ public class BudgetRepository
             newBudget.CostumerId,
             newBudget.CostumerName,
             newBudget.Footage,
-            newBudget.Value,
+            newBudget.TotalWeight,
+            newBudget.SellPrice,
             newBudget.City,
             newBudget.State,
+            newBudget.FreightWeight,
+            newBudget.FreightType,
+            newBudget.FreightPrice,
             newBudget.Administration,
             newBudget.Profit,
             newBudget.Taxes,
-            newBudget.Extra,
-            newBudget.FreightId,
-            newBudget.FreightPrice
+            newBudget.Extra
         );
 
         if (budget is null)
@@ -95,7 +90,5 @@ public class BudgetRepository
         if (await costumersRepository.GetCostumerById(budget.CostumerId) is null)
             throw new KeyNotFoundException("Invalid costumerId");
 
-        if (await freightRepository.GetFreightById(budget.FreightId) is null && budget.FreightId != null)
-            throw new KeyNotFoundException("Invalid freightId");
     }
 }
