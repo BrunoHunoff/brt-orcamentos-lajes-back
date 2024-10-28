@@ -1,6 +1,6 @@
 public record AddCostumerRequest(
     string Name, 
-    bool Pj, 
+    string Pj, 
     string CnpjCpf, 
     string Cep, 
     string City,
