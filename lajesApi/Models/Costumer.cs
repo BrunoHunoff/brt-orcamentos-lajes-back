@@ -1,7 +1,7 @@
 public class Costumer {
     public int Id { get; init; }
     public string Name { get; private set; }
-    public bool PJ { get; private set; }
+    public string PJ { get; private set; }
     public string CnpjCpf { get; private set; }
     public string Cep { get; private set; }
     public string City { get; private set; }
@@ -13,7 +13,7 @@ public class Costumer {
 
     public Costumer(){}
 
-    public Costumer(string name, bool pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber)
+    public Costumer(string name, string pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber)
         {
             Name = name;
             PJ = pj;
@@ -27,7 +27,7 @@ public class Costumer {
             PhoneNumber = phoneNumber;
         }
 
-    public void Updatecostumer(string name, bool pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber) {
+    public void Updatecostumer(string name, string pj, string cnpjCpf, string cep, string city, string state, string address, int addressNumber, string email, string phoneNumber) {
         Name = name;
             PJ = pj;
             CnpjCpf = cnpjCpf;
