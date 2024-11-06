@@ -1,11 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 public static class SlabController
 {
-
+    [Authorize]
     public static void AddSlabEndpoints(this WebApplication app)
     {
-        var slabEndpoints = app.MapGroup("slabs");
+        var slabEndpoints = app.MapGroup("slabs").RequireAuthorization();
 
         //GET ALL
         slabEndpoints.MapGet("", async ([FromServices] SlabsRepository slabRepository) =>

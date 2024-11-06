@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 public static class BudgetController
 {
+    [Authorize]
     public static void AddBudgetEndpoints(this WebApplication app)
     {
-        var budgetEndpoints = app.MapGroup("budgets");
+        var budgetEndpoints = app.MapGroup("budgets").RequireAuthorization();
 
         // GET ALL
         budgetEndpoints.MapGet(

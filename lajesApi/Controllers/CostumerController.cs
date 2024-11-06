@@ -1,11 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 public static class CostumerController
 {
-
+    [Authorize]
     public static void AddCostumerEndpoints(this WebApplication app)
     {
-        var costumerEndpoints = app.MapGroup("costumers");
+        var costumerEndpoints = app.MapGroup("costumers").RequireAuthorization();
 
         //GET ALL
         costumerEndpoints.MapGet("", async ([FromServices] CostumersRepository costumerRepository) =>
