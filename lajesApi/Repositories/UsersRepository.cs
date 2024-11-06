@@ -7,7 +7,7 @@ public class UsersRepository{
         dbContext = AppdbContext;
     }
 
-    public async Task<User?> GetUserById(int id) => await dbContext.users.SingleOrDefaultAsync(user => user.Id == id);
+    public async Task<User?> GetUserByEmail(string email) => await dbContext.users.SingleOrDefaultAsync(user => user.Email == email);
 
     public async Task Add(User user) {
         await dbContext.users.AddAsync(user);

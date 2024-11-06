@@ -18,6 +18,7 @@ builder.Services.AddScoped<CostumersRepository>();
 builder.Services.AddScoped<BudgetRepository>();
 builder.Services.AddScoped<BudgetSlabsRepository>();
 builder.Services.AddScoped<UsersRepository>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddScoped<AppDbContext>();
 
@@ -41,6 +42,7 @@ app.AddSlabEndpoints();
 app.AddBudgetEndpoints();
 app.AddCostumerEndpoints();
 app.AddUsersEndpoints();
+app.AddAuthEndpoints();
 
 
 app.Run();

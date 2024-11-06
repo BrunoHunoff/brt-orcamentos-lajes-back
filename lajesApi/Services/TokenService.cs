@@ -12,12 +12,13 @@ public class TokenService : ITokenService
         _configuration = configuration;
         _usersRepository = usersRepository;
     }
-    public async Task<string> GenerateToken(User user)
+    public async Task<string> GenerateToken(LoginDto loginDto)
     {
-        var userDataBase = await _usersRepository.GetUserById(user.Id);
+        var userDataBase = await _usersRepository.GetUserByEmail(loginDto.Email);
 
+        if (userDataBase == null) return String.Empty;
 
-        if (user.Name != userDataBase.Name || user.Password != userDataBase.Password) return String.Empty;
+        if (loginDto.Email != userDataBase.Email || loginDto.Password != userDataBase.Password) return String.Empty;
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty));
         var issuer = _configuration["Jwt:Issuer"];

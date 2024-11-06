@@ -1,4 +1,4 @@
 public interface ITokenService
 {
-    Task<string> GenerateToken(User user);
+    Task<string> GenerateToken(LoginDto loginDto);
 }
