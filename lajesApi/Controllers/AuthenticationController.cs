@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
+
 public static class AuthEndpoints
 {
+    [Authorize]
     public static void AddAuthEndpoints(this WebApplication app)
     {
         app.MapPost("/login", async (LoginDto loginDto, TokenService tokenService) =>
