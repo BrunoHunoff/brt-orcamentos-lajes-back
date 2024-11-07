@@ -55,6 +55,7 @@ builder.Services.AddScoped<BudgetSlabsRepository>();
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<AppDbContext>();
+builder.Services.AddScoped<PasswordHasher>();
 
 // Configuração de autenticação e JWT antes de `builder.Build()`
 builder.Services.AddAuthentication(options =>
