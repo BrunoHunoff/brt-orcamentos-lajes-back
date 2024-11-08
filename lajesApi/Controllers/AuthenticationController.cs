@@ -2,20 +2,57 @@ using Microsoft.AspNetCore.Authorization;
 
 public static class AuthEndpoints
 {
-
     [Authorize]
     public static void AddAuthEndpoints(this WebApplication app)
     {
-        app.MapPost("/login", async (LoginDto loginDto, TokenService tokenService) =>
-        {
-            var token = await tokenService.GenerateToken(loginDto);
-
-            if (string.IsNullOrEmpty(token))
+        // Endpoint para login
+        app.MapPost(
+            "/login",
+            async (
+                LoginDto loginDto,
+                TokenService tokenservice,
+                AuthService authService,
+                HttpContext context
+            ) =>
             {
-                return Results.Unauthorized();
-            }
+                var (token, refreshToken) = await authService.LoginAsync(
+                    loginDto.Email,
+                    loginDto.Password
+                );
 
-            return Results.Ok(new { Token = token });
-        });
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Results.Unauthorized();
+                }
+
+                tokenservice.SetTokensCookie(token, refreshToken, context);
+
+                return Results.Ok("Token: " + token + "RefreshToken: " + refreshToken);
+            }
+        );
+
+        app.MapPost(
+            "/refresh",
+            async (
+                string refreshToken,
+                AuthService authService,
+                RefreshTokensRepository refreshTokensRepo,
+                TokenService tokenService,
+                IConfiguration configuration,
+                HttpContext context
+            ) =>
+            {
+                var (newToken, newRefreshToken) = await authService.Refresh(refreshToken);
+
+                if (string.IsNullOrEmpty(newToken))
+                {
+                    return Results.Unauthorized();
+                }
+
+                tokenService.SetTokensCookie(newToken, newRefreshToken, context);
+
+                return Results.Ok("Token: " + newToken + "RefreshToken: " + newRefreshToken);
+            }
+        );
     }
 }

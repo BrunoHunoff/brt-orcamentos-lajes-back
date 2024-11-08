@@ -11,6 +11,8 @@ public class UsersRepository{
 
     public async Task<User?> GetUserByEmail(string email) => await dbContext.users.SingleOrDefaultAsync(user => user.Email == email);
 
+    public async Task<User?> GetUserByIdAsync(int id) => await dbContext.users.SingleOrDefaultAsync(user => user.Id == id);
+
     public async Task Add(User user) {
 
         user.Password = passwordHasher.Hash(user.Password);
