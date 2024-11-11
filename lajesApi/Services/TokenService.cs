@@ -1,42 +1,22 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-
-public class TokenService : ITokenService 
+public class TokenService 
 {
-    private readonly IConfiguration _configuration;
-    private readonly UsersRepository _usersRepository;
-    private readonly PasswordHasher _passwordHasher;
-
-    public TokenService(IConfiguration configuration, UsersRepository usersRepository, PasswordHasher passwordHasher)
+    public void SetTokensCookie(string token, string refreshToken, HttpContext context)
     {
-        _configuration = configuration;
-        _usersRepository = usersRepository;
-        _passwordHasher = passwordHasher;
+        context.Response.Cookies.Append("userToken", token, new CookieOptions
+        {
+            Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+            Secure = true,
+            HttpOnly = true,
+            SameSite = SameSiteMode.Strict
+        });
+
+        context.Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        {
+            Expires = DateTimeOffset.UtcNow.AddDays(1),
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict
+        });
     }
-    public async Task<string> GenerateToken(LoginDto loginDto)
-    {
-        var userDataBase = await _usersRepository.GetUserByEmail(loginDto.Email);
 
-        if (userDataBase == null) return String.Empty;
-
-        if (loginDto.Email != userDataBase.Email || !_passwordHasher.Verify(userDataBase.Password, loginDto.Password)) return String.Empty;
-
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty));
-        var issuer = _configuration["Jwt:Issuer"];
-        var audience = _configuration["Jwt:Audience"];
-
-        var sigingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-
-        var tokenOptions = new JwtSecurityToken(
-            issuer: issuer,
-            audience: audience,
-            expires: DateTime.Now.AddMinutes(30),
-            signingCredentials: sigingCredentials
-        );
-
-        var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-
-        return token;
-    }
 }

@@ -1,4 +1,6 @@
-public class User{
+using Microsoft.AspNetCore.Identity;
+
+public class User : IdentityUser{
     public int Id { get; init; }
     public string Name { get; set;}
     public string Email { get; set;}
