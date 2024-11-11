@@ -4,7 +4,7 @@ public class TokenService
     {
         context.Response.Cookies.Append("userToken", token, new CookieOptions
         {
-            Expires = DateTimeOffset.UtcNow.AddMinutes(15),
+            Expires = DateTimeOffset.UtcNow.AddMinutes(30),
             Secure = true,
             HttpOnly = true,
             SameSite = SameSiteMode.Strict
@@ -12,7 +12,7 @@ public class TokenService
 
         context.Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
         {
-            Expires = DateTimeOffset.UtcNow.AddDays(7),
+            Expires = DateTimeOffset.UtcNow.AddDays(1),
             HttpOnly = true,
             Secure = true,
             SameSite = SameSiteMode.Strict

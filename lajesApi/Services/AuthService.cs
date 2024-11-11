@@ -74,7 +74,7 @@ public class AuthService
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddSeconds(30),
+            expires: DateTime.Now.AddMinutes(30),
             signingCredentials: creds
         );
 
@@ -88,7 +88,7 @@ public class AuthService
         refreshToken.Token = Guid.NewGuid().ToString("N");
         refreshToken.UserId = userId;
         refreshToken.CreationDate = DateTime.Now;
-        refreshToken.ExpirationDate = DateTime.Now.AddDays(7);
+        refreshToken.ExpirationDate = DateTime.Now.AddDays(1);
 
         return refreshToken;
     }
