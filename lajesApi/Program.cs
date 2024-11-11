@@ -9,13 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins",
-        builder => builder
-            .AllowAnyOrigin()
+    options.AddPolicy("AllowSpecificOrigins", builder => 
+        builder
+            .WithOrigins("http://localhost:5173") // Substitua pelos domínios específicos permitidos
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
 });
+
 
 // Configuração do Swagger com autenticação
 builder.Services.AddEndpointsApiExplorer();
