@@ -34,7 +34,6 @@ public static class AuthEndpoints
         app.MapPost(
             "/refresh",
             async (
-                string refreshToken,
                 AuthService authService,
                 RefreshTokensRepository refreshTokensRepo,
                 TokenService tokenService,
@@ -42,6 +41,9 @@ public static class AuthEndpoints
                 HttpContext context
             ) =>
             {
+                var refreshToken = context.Request.Cookies["refreshToken"];
+                if (refreshToken == null) return Results.Unauthorized();
+
                 var (newToken, newRefreshToken) = await authService.Refresh(refreshToken);
 
                 if (string.IsNullOrEmpty(newToken))
